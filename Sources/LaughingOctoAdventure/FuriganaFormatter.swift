@@ -5,6 +5,9 @@ public protocol FuriganaFormatter {
 }
 
 public class ConcreteFuriganaFormatter {
+    
+    public init() {}
+    
     public func formattedString(fromKanji kanji: String, andHiragana hiragana: String) -> String {
         
         // Basic implementation for test to pass
