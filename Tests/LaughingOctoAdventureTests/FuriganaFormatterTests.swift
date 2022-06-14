@@ -32,4 +32,23 @@ final class FuriganaFormatterTests: XCTestCase {
         // Then
         XCTAssertEqual(result, "誰[だれ]でも")
     }
+    
+    func testGivenAnExampleStringWithOnlyHiraganaThenTheResultIsFormattedCorrectly() throws {
+        
+        // Given
+        let kanji = "だった"
+        let hiragana = "だった"
+        
+        let formatter = ConcreteFuriganaFormatter()
+
+        // When
+        let result1 = formatter.formattedString(fromKanji: kanji, andHiragana: "")
+        let result2 = formatter.formattedString(fromKanji: "", andHiragana: hiragana)
+        let result3 = formatter.formattedString(fromKanji: kanji, andHiragana: hiragana)
+
+        // Then
+        XCTAssertEqual(result1, "だった")
+        XCTAssertEqual(result2, "だった")
+        XCTAssertEqual(result3, "だった")
+    }
 }

@@ -10,6 +10,14 @@ public class ConcreteFuriganaFormatter {
     
     public func formattedString(fromKanji kanji: String, andHiragana hiragana: String) -> String {
         
+        if kanji.isEmpty || kanji == hiragana {
+            return hiragana
+        }
+        
+        if hiragana.isEmpty {
+            return kanji
+        }
+        
         let firstReplacementIndex = kanji.firstIndex { char in
             String(char).containsHiragana
         }
