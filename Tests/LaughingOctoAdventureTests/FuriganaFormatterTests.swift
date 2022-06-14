@@ -17,4 +17,19 @@ final class FuriganaFormatterTests: XCTestCase {
         // Then
         XCTAssertEqual(result, "休学[きゅうがく]")
     }
+    
+    func testGivenAnExampleStringWithSingleKanaSuffixThenTheFuriganaisFormattedCorrectly() throws {
+        
+        // Given
+        let kanji = "誰でも"
+        let hiragana = "だれでも"
+        
+        let formatter = ConcreteFuriganaFormatter()
+
+        // When
+        let result = formatter.formattedString(fromKanji: kanji, andHiragana: hiragana)
+        
+        // Then
+        XCTAssertEqual(result, "誰[だれ]でも")
+    }
 }
