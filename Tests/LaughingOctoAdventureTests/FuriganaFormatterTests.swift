@@ -67,4 +67,18 @@ final class FuriganaFormatterTests: XCTestCase {
         XCTAssertEqual(result, "然[しか]し")
         
     }
+    
+    func testGivenAnExampleStringWithMultipleKanjiAndHiraganaSectionsIsFormattedCorrectly() throws {
+
+        let kanji = "燃え上がる"
+        let hiragana = "もえあがる"
+        let formatter = ConcreteFuriganaFormatter()
+
+        // When
+        let result = formatter.formattedString(fromKanji: kanji, andHiragana: hiragana)
+        
+        // Then
+        XCTAssertEqual(result, "燃[も]え上[あ]がる")
+        
+    }
 }
