@@ -26,14 +26,22 @@ public class ConcreteFuriganaFormatter {
             
             let lastKanjiChar = kanji[firstReplacementIndex]
             
-            let hiraganaPrefix = hiragana.firstIndex { char in
-                char == lastKanjiChar
+            var middlePrefix = -1
+            
+            for (charIndex, hChar) in hiragana.enumerated() {
+                
+                // If it contains Kanji it can't replace at 0 position
+                if charIndex > 0 && hChar == lastKanjiChar {
+                    middlePrefix = charIndex
+                }
             }
             
-            if let hiraganaPrefix = hiraganaPrefix {
+            if middlePrefix > -1 {
                 
+                let hiraganaIndex = hiragana.index(hiragana.startIndex, offsetBy: middlePrefix)
+
                 let prefixString = "\(kanji[..<firstReplacementIndex])"
-                let middleString = "\(hiragana[..<hiraganaPrefix])"
+                let middleString = "\(hiragana[..<hiraganaIndex])"
                 let suffixString = "\(kanji[firstReplacementIndex...])"
         
                 return "\(prefixString)[\(middleString)]\(suffixString)"

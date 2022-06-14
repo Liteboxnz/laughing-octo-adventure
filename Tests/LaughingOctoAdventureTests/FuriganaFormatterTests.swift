@@ -18,7 +18,7 @@ final class FuriganaFormatterTests: XCTestCase {
         XCTAssertEqual(result, "休学[きゅうがく]")
     }
     
-    func testGivenAnExampleStringWithSingleKanaSuffixThenTheFuriganaisFormattedCorrectly() throws {
+    func testGivenAnExampleStringWithSingleKanaSuffixThenTheFuriganaIsFormattedCorrectly() throws {
         
         // Given
         let kanji = "誰でも"
@@ -50,5 +50,21 @@ final class FuriganaFormatterTests: XCTestCase {
         XCTAssertEqual(result1, "だった")
         XCTAssertEqual(result2, "だった")
         XCTAssertEqual(result3, "だった")
+    }
+    
+    func testGivenAnExampleStringWithAShortTermThenTheFuriganaIsFormattedCorrectly() throws {
+
+        // Given
+        let kanji = "然し"
+        let hiragana = "しかし"
+        
+        let formatter = ConcreteFuriganaFormatter()
+
+        // When
+        let result = formatter.formattedString(fromKanji: kanji, andHiragana: hiragana)
+        
+        // Then
+        XCTAssertEqual(result, "然[しか]し")
+        
     }
 }
