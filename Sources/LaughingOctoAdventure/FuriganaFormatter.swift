@@ -24,7 +24,6 @@ public class ConcreteFuriganaFormatter {
         
         guard let firstReplacementIndex = firstReplacementIndex else {
             return "\(kanji)[\(hiragana)]"
-
         }
             
         let lastKanjiChar = kanji[firstReplacementIndex]
@@ -39,7 +38,7 @@ public class ConcreteFuriganaFormatter {
             }
         }
         
-        guard firstHiraganaIndex > -1 else {
+        guard firstHiraganaIndex >= 0 else {
             return "\(kanji)[\(hiragana)]"
         }
         
@@ -50,34 +49,32 @@ public class ConcreteFuriganaFormatter {
         let suffixString = "\(kanji[firstReplacementIndex...])"
 
         // If there is further kanji use recursion to apply furigana
-        if suffixString.containsKanji {
-                
-            let startOfNewKanjiString = String(kanji[firstReplacementIndex...])
-            let startOfNewHiraganaString = String(hiragana[hiraganaIndex...])
-            
-            // If need to recursively break down multiple parts
-            if let suffixKanaOffset = startOfNewKanjiString.firstIndex(where: { char in
-                String(char).containsKanji
-            }) {
-                
-                let croppedKanjiString = String(startOfNewKanjiString[suffixKanaOffset...])
-                let croppedHiraganaString = String(startOfNewHiraganaString[suffixKanaOffset...])
-                
-                // Any kana until next Kanji
-                let offsetString = String(startOfNewKanjiString[..<suffixKanaOffset])
-
-                
-                let replacementSuffixString = formattedString(fromKanji: croppedKanjiString,
-                                                              andHiragana: croppedHiraganaString)
-                
-                
-                return "\(prefixString)[\(middleString)]\(offsetString)\(replacementSuffixString)"
-            }
-                
-            return "\(prefixString)[\(middleString)]\(suffixString)"
-            
-        } else {
+        guard suffixString.containsKanji else {
             return "\(prefixString)[\(middleString)]\(suffixString)"
         }
+                
+        let startOfNewKanjiString = String(kanji[firstReplacementIndex...])
+        let startOfNewHiraganaString = String(hiragana[hiraganaIndex...])
+        
+        // If need to recursively break down multiple parts
+        guard let suffixKanaOffset = startOfNewKanjiString.firstIndex(where: { char in
+            String(char).containsKanji
+            
+        }) else {
+            return "\(prefixString)[\(middleString)]\(suffixString)"
+        }
+            
+        let croppedKanjiString = String(startOfNewKanjiString[suffixKanaOffset...])
+        let croppedHiraganaString = String(startOfNewHiraganaString[suffixKanaOffset...])
+        
+        // Any kana until next Kanji
+        let offsetString = String(startOfNewKanjiString[..<suffixKanaOffset])
+
+        
+        let replacementSuffixString = formattedString(fromKanji: croppedKanjiString,
+                                                      andHiragana: croppedHiraganaString)
+        
+        
+        return "\(prefixString)[\(middleString)]\(offsetString)\(replacementSuffixString)"
     }
 }
