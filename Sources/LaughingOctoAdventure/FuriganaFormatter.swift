@@ -75,6 +75,6 @@ public class ConcreteFuriganaFormatter {
                                                       andHiragana: croppedHiraganaString)
         
         
-        return "\(prefixString)[\(middleString)]\(offsetString)\(replacementSuffixString)"
+        return "\(prefixString)[\(middleString)]\(offsetString) \(replacementSuffixString)"
     }
 }
